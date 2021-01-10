@@ -17,13 +17,13 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 class NewsFragment: Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val vista = inflater.inflate(R.layout.fragment_news, container, false)
 
         val retrofit = Retrofit.Builder()
@@ -33,28 +33,24 @@ class NewsFragment: Fragment() {
 
         val api = retrofit.create<ApiServices>(ApiServices::class.java)
 
-        api.getListArticles().enqueue(object : retrofit2.Callback<ArticleDataItem>{
+        api.getListArticles().enqueue(object : retrofit2.Callback<ArticleDataItem> {
             override fun onResponse(
                 call: Call<ArticleDataItem>,
                 response: Response<ArticleDataItem>
             ) {
                 val article = response?.body()
+
                 val recyclerPost = vista.findViewById(R.id.recyclerView) as RecyclerView
                 recyclerPost.layoutManager = LinearLayoutManager(context)
+
                 recyclerPost.adapter = RecyclerAdapter(context, article!!.articles!!)
                 Toast.makeText(context, "Loading", Toast.LENGTH_LONG).show()
             }
+
             override fun onFailure(call: Call<ArticleDataItem>, t: Throwable) {
                 Toast.makeText(context, "ERROR", Toast.LENGTH_LONG).show()
             }
-
         })
-
         return vista
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
     }
 }
