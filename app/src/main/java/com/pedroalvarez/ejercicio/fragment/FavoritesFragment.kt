@@ -11,54 +11,45 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pedroalvarez.ejercicio.NavPost
 import com.pedroalvarez.ejercicio.R
-import com.pedroalvarez.ejercicio.adapter.RecyclerAdapter
-import com.pedroalvarez.ejercicio.data.ApiServices
-import com.pedroalvarez.ejercicio.data.ArticleDataItem
-import retrofit2.Call
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.pedroalvarez.ejercicio.adapter.RecyclerAdapterFavorites
+import com.pedroalvarez.ejercicio.data.database.FavoritePost
+import com.pedroalvarez.ejercicio.data.database.Favpost
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
-class FavoritesFragment: Fragment(), RecyclerAdapter.OnPostClick {
+class FavoritesFragment: Fragment(), RecyclerAdapterFavorites.OnFavoritesClick {
+
+    lateinit var postFav: MutableList<FavoritePost>
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val vista = inflater.inflate(R.layout.fragment_favorites, container, false)
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://newsapi.org/v2/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val api = retrofit.create<ApiServices>(ApiServices::class.java)
-
-        api.getListArticles().enqueue(object : retrofit2.Callback<ArticleDataItem> {
-            override fun onResponse(
-                call: Call<ArticleDataItem>,
-                response: Response<ArticleDataItem>
-            ) {
-                val article = response?.body()
+        //GetDataBase
+        doAsync {
+            postFav = Favpost.database.favoriteDao().getFavoritePost()
+            uiThread {
+                //RecyclerView
                 val recyclerPost = vista.findViewById(R.id.recyclerViewFav) as RecyclerView
                 recyclerPost.layoutManager = LinearLayoutManager(context)
-                recyclerPost.adapter = RecyclerAdapter(context, article!!.articles!!,this@FavoritesFragment)
-            }
 
-            override fun onFailure(call: Call<ArticleDataItem>, t: Throwable) {
-                Toast.makeText(context, "Failed connection", Toast.LENGTH_LONG).show()
+                recyclerPost.adapter = RecyclerAdapterFavorites(context, postFav, this@FavoritesFragment)
             }
-
-        })
+        }
         return vista
     }
-
-    override fun onPostNavClick(url: String?){
+    override fun onPostNavClick(url: String?) {
         val intent = Intent(context, NavPost::class.java)
         intent.putExtra("Url", url)
         startActivity(intent)
     }
-    override fun onFavoriteClick(title: String?, url: String?, urlToImage: String?) {
-        Toast.makeText(context, "Delete Favorite", Toast.LENGTH_LONG).show()
+    override fun onPostDelete(title: String, url: String, urlImg: String) {
+        doAsync {
+            Favpost.database.favoriteDao().deleteFavorite(
+                FavoritePost("$title", "$url", "$urlImg"))
+            postFav.remove(title)
+        }
+        Toast.makeText(context, "Delete", Toast.LENGTH_LONG).show()
     }
 }

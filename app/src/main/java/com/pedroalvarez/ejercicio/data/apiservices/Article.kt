@@ -1,4 +1,4 @@
-package com.pedroalvarez.ejercicio.data
+package com.pedroalvarez.ejercicio.data.apiservices
 
 
 import com.google.gson.annotations.SerializedName

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.pedroalvarez.ejercicio.R
-import com.pedroalvarez.ejercicio.data.Article
+import com.pedroalvarez.ejercicio.data.apiservices.Article
 import kotlinx.android.synthetic.main.card_view.view.*
 import java.lang.IllegalArgumentException
 

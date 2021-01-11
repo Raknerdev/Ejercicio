@@ -24,16 +24,45 @@
             android:layout_gravity="bottom"
             android:gravity="center"
             android:background="@color/colorAccentBackCard">
-            <TextView
-                android:id="@+id/tittleCardFav"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/padding5"
-                android:paddingRight="@dimen/padding5"
-                android:textAlignment="gravity"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/text16"
-                android:textStyle="bold"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/heigth70"
+                android:orientation="horizontal"
+                android:gravity="right">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginLeft="55dp">
+
+                    <TextView
+                        android:id="@+id/tittleCardFav"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/padding5"
+                        android:paddingRight="@dimen/padding5"
+                        android:textAlignment="gravity"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text16"
+                        android:textStyle="bold"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center">
+
+                    <ImageButton
+                        android:id="@+id/deleteFavorites"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="@dimen/padding15"
+                        android:background="#00FFFFFF"
+                        android:src="@android:drawable/ic_menu_delete" />
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 </androidx.cardview.widget.CardView>

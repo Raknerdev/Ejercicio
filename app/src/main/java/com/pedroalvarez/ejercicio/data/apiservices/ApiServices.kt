@@ -1,4 +1,4 @@
-package com.pedroalvarez.ejercicio.data
+package com.pedroalvarez.ejercicio.data.apiservices
 
 import retrofit2.Call
 import retrofit2.http.GET

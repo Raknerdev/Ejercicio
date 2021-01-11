@@ -12,8 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pedroalvarez.ejercicio.NavPost
 import com.pedroalvarez.ejercicio.R
 import com.pedroalvarez.ejercicio.adapter.RecyclerAdapter
-import com.pedroalvarez.ejercicio.data.ApiServices
-import com.pedroalvarez.ejercicio.data.ArticleDataItem
+import com.pedroalvarez.ejercicio.data.apiservices.ApiServices
+import com.pedroalvarez.ejercicio.data.apiservices.ArticleDataItem
+import com.pedroalvarez.ejercicio.data.database.FavoritePost
+import com.pedroalvarez.ejercicio.data.database.Favpost
+import org.jetbrains.anko.doAsync
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -27,40 +30,40 @@ class NewsFragment: Fragment(), RecyclerAdapter.OnPostClick {
         savedInstanceState: Bundle?
     ): View? {
         val vista = inflater.inflate(R.layout.fragment_news, container, false)
-
+        //API
         val retrofit = Retrofit.Builder()
             .baseUrl("http://newsapi.org/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
         val api = retrofit.create<ApiServices>(ApiServices::class.java)
-
         api.getListArticles().enqueue(object : retrofit2.Callback<ArticleDataItem> {
             override fun onResponse(
                 call: Call<ArticleDataItem>,
                 response: Response<ArticleDataItem>
             ) {
                 val article = response?.body()
-
+                //RecyclerView
                 val recyclerPost = vista.findViewById(R.id.recyclerView) as RecyclerView
                 recyclerPost.layoutManager = LinearLayoutManager(context)
 
                 recyclerPost.adapter = RecyclerAdapter(context, article!!.articles!!, this@NewsFragment)
             }
-
             override fun onFailure(call: Call<ArticleDataItem>, t: Throwable) {
                 Toast.makeText(context, "Failed connection", Toast.LENGTH_LONG).show()
             }
         })
         return vista
     }
-
     override fun onPostNavClick(url: String?){
         val intent = Intent(context, NavPost::class.java)
         intent.putExtra("Url", url)
         startActivity(intent)
     }
     override fun onFavoriteClick(title: String?, url: String?, urlToImage: String?) {
-        Toast.makeText(context, "Add Favorite", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "Added Favorite", Toast.LENGTH_LONG).show()
+        doAsync {
+            Favpost.database.favoriteDao().insertFavorite(
+                FavoritePost("$title", "$url", "$urlToImage"))
+        }
     }
 }
