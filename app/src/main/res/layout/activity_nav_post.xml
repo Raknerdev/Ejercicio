@@ -6,9 +6,12 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_nav">
 
+    <include layout="@layout/tool_bar"/>
+
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

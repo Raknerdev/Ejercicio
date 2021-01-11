@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/card_heigth"
+    app:cardCornerRadius="@dimen/corner_radius"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_marginBottom="@dimen/padding8">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/imgCardFav"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_heigth"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/heigth70"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:background="@color/colorAccentBackCard">
+            <TextView
+                android:id="@+id/tittleCardFav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/padding5"
+                android:paddingRight="@dimen/padding5"
+                android:textAlignment="gravity"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text16"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </FrameLayout>
+</androidx.cardview.widget.CardView>
