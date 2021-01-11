@@ -49,7 +49,7 @@ class NewsFragment: Fragment(), RecyclerAdapter.OnPostClick {
                 recyclerPost.adapter = RecyclerAdapter(context, article!!.articles!!, this@NewsFragment)
             }
             override fun onFailure(call: Call<ArticleDataItem>, t: Throwable) {
-                Toast.makeText(context, "Failed connection", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, getString(R.string.errorConnection), Toast.LENGTH_LONG).show()
             }
         })
         return vista
@@ -60,7 +60,7 @@ class NewsFragment: Fragment(), RecyclerAdapter.OnPostClick {
         startActivity(intent)
     }
     override fun onFavoriteClick(title: String?, url: String?, urlToImage: String?) {
-        Toast.makeText(context, "Added Favorite", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, getString(R.string.addFavorite), Toast.LENGTH_LONG).show()
         doAsync {
             Favpost.database.favoriteDao().insertFavorite(
                 FavoritePost("$title", "$url", "$urlToImage"))

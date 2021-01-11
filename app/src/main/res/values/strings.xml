@@ -2,4 +2,7 @@
     <string name="app_name">Ejercicio</string>
     <string name="tab_text_1">News</string>
     <string name="tab_text_2">Favorites</string>
+    <string name="deleteFavorite">Removed</string>
+    <string name="addFavorite">Added Favorite</string>
+    <string name="errorConnection">Failed connection</string>
 </resources>

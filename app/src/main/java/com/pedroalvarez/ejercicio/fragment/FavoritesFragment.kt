@@ -50,6 +50,6 @@ class FavoritesFragment: Fragment(), RecyclerAdapterFavorites.OnFavoritesClick {
                 FavoritePost("$title", "$url", "$urlImg"))
             postFav.remove(title)
         }
-        Toast.makeText(context, "Delete", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, getString(R.string.deleteFavorite), Toast.LENGTH_LONG).show()
     }
 }
